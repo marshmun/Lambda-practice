@@ -3,9 +3,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.sun.tools.doclint.Entity.lambda;
-import static jdk.nashorn.internal.objects.Global.print;
-
 /**
  * Created by gilpratte on 7/26/17.
  */
@@ -24,14 +21,19 @@ public class ComparatorDemo {
         print(addresses);
 
         // !! - Write an anonymous class to sort by state (alphabetically)
-        Collections.sort(addresses, /* anonymous class here */
-          );
+        Collections.sort(addresses, new Comparator<Address>() { /* anonymous class here */
+                    @Override
+                    public int compare(Address o1, Address o2) {
+                        return o1.getState().compareTo(o2.getState());
+                    }
+                }
+        );
 
         System.out.println("\nAfter sorting by state");
         print(addresses);
 
         // !! - Write a lambda to sort by city alphabetically
-        Collections.sort(addresses, /* lambda here */);
+        Collections.sort(addresses, Comparator.comparing(Address::getCity)); /* lambda here */
 
         System.out.println("\nAfter sorting by city");
         print(addresses);
